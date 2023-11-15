@@ -1,7 +1,7 @@
 #include "main.h"
 #include <unistd.h>
 /**
-* main - prints a prompt for the user kay
+* main - prints a prompt for the user
 * @ac: argument count
 * @av: argument vector
 * Return: 0
