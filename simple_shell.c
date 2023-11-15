@@ -9,39 +9,54 @@
 
 int main()
 {
-	char *last_slash, command[MAX_COMMAND_LENGTH];
-	size_t len;
+	char *last_slash;
+	char *command = NULL;
+	size_t n = 0;
 	pid_t pid;
 	int val;
+	int len;
+	char *xit = "exit";
 	struct stat file_stat;
 
-	printf("$ ");
-	fflush(stdout);
-	if (fgets(command, sizeof(command), stdin) == NULL)
+	do	
 	{
-		printf("\nExiting shell...\n");
-		return (1);
+	printf("($) ");
+	fflush(stdout);
+	len = getline(&command, &n, stdin);
+	if (len == -1)
+	{
+		if (feof(stdin))
+		{
+			printf("End of file reached. Exiting...\n");
+			continue;
+		}
+		else
+		{
+			perror("getline error");
+			continue;
+		}
 	}
-        len = strlen(command);
         if (len > 0 && command[len - 1] == '\n')
 	{
 		command[len - 1] = '\0';
         }
+	if (strcmp(command, xit) == 0)
+		continue;
 	if (stat(command, &file_stat) == -1)
 	{
 		perror("Error checking executable");
-		exit(EXIT_FAILURE);
+		continue;
 	}
 	if (!(file_stat.st_mode & S_IXUSR))
 	{
 		fprintf(stderr, "Error: The file is not executable\n");
-		exit(EXIT_FAILURE);
+		continue;
 	}
 	pid = fork();
         if (pid == -1)
 	{
 		perror("Fork failed");
-		exit(EXIT_FAILURE);
+		continue;
 	}
 	else if (pid == 0)
 	{
@@ -59,7 +74,7 @@ int main()
 		if (val == -1)
 		{
 			perror("Error executing command");
-			exit(EXIT_FAILURE);
+			continue;
 		}
 	}
 	else
@@ -69,11 +84,14 @@ int main()
 		if (WIFEXITED(status))
 		{
 			printf("Command executed successfully with exit status: %d\n", WEXITSTATUS(status));
+			continue;
 		}
 		else
 		{
-				printf("Command execution failed\n");
+			printf("Command execution failed\n");
+			continue;
 		}
 	}
+	}while (strcmp(command, xit) != 0);
 	return 0;
 }
