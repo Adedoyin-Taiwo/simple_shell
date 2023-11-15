@@ -9,7 +9,7 @@
 
 int main()
 {
-	char command[MAX_COMMAND_LENGTH];
+	char *last_slash, command[MAX_COMMAND_LENGTH];
 	size_t len;
 	pid_t pid;
 	int val;
@@ -48,6 +48,13 @@ int main()
 		char *args[MAX_COMMAND_LENGTH];
                 args[0] = command;
                 args[1] = NULL;
+		last_slash = strrchr(command, '/');
+		if (last_slash != NULL)
+		{
+			*last_slash = '\0';
+			chdir(command);
+		}
+
 		val = execve(command, args, environ);
 		if (val == -1)
 		{
