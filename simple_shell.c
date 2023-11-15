@@ -1,6 +1,6 @@
 #include "main.h"
 #include <unistd.h>
-**
+/**
 * main - prints a prompt for user
 * @ac: argument count
 * @av: argument vector
