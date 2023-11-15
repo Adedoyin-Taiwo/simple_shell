@@ -10,5 +10,5 @@
 #include <sys/wait.h>
 #include <sys/stat.h>
 
-extern char **environ;
+extern har **environ;
 #endif
