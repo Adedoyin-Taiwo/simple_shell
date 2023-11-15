@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include <unistd.h>
 /**
 * main - prints a prompt for user
 * @ac: argument count
@@ -13,6 +13,7 @@ int main()
 	size_t len;
 	pid_t pid;
 	int val;
+	struct stat file_stat;
 
 	printf("apshell$ ");
 	fflush(stdout);
@@ -26,6 +27,16 @@ int main()
 	{
 		command[len - 1] = '\0';
         }
+	if (stat(command, &file_stat) == -1)
+	{
+		perror("Error checking executable");
+		exit(EXIT_FAILURE);
+	}
+	if (!(file_stat.st_mode & S_IXUSR))
+	{
+		fprintf(stderr, "Error: The file is not executable\n");
+		exit(EXIT_FAILURE);
+	}
 	pid = fork();
         if (pid == -1)
 	{
