@@ -1,6 +1,6 @@
 #include "main.h"
 #include <unistd.h>
-/**
+**
 * main - prints a prompt for user
 * @ac: argument count
 * @av: argument vector
@@ -55,7 +55,7 @@ int main()
 	pid = fork();
         if (pid == -1)
 	{
-		perror("Fork failed");
+
 		continue;
 	}
 	else if (pid == 0)

@@ -11,6 +11,4 @@
 #include <sys/stat.h>
 
 extern char **environ;
-
-void _printf(const char *text);
 #endif
