@@ -15,7 +15,7 @@ int main()
 	int val;
 	struct stat file_stat;
 
-	printf("apshell$ ");
+	printf("$ ");
 	fflush(stdout);
 	if (fgets(command, sizeof(command), stdin) == NULL)
 	{
@@ -54,18 +54,18 @@ int main()
 			perror("Error executing command");
 			exit(EXIT_FAILURE);
 		}
+	}
+	else
+	{
+		int status;
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			printf("Command executed successfully with exit status: %d\n", WEXITSTATUS(status));
+		}
 		else
 		{
-			int status;
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-			{
-				printf("Command executed successfully with exit status: %d\n", WEXITSTATUS(status));
-			}
-			else
-			{
 				printf("Command execution failed\n");
-			}
 		}
 	}
 	return 0;
