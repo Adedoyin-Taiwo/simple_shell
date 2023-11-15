@@ -6,6 +6,7 @@
 * @av: argument vector
 * Return: 0
 */
+
 int main()
 {
 	char command[MAX_COMMAND_LENGTH];
@@ -36,7 +37,7 @@ int main()
 		char *args[MAX_COMMAND_LENGTH];
                 args[0] = command;
                 args[1] = NULL;
-		val = execvp(command, args);
+		val = execve(command, args, environ);
 		if (val == -1)
 		{
 			perror("Error executing command");

@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
+extern char **environ;
 
 void _printf(const char *text);
 #endif
