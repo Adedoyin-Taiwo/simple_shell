@@ -40,17 +40,18 @@ void executeCommand(const char *command)
 	else
 	{
 		int status;
+
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 		{
-			printf("Command executed successfully with exit status: %d\n", WEXITSTATUS(status));
+			printf("Command executed successfully with
+					exit status: %d\n", WEXITSTATUS(status));
 		}
 		else
 		{
 			printf("Command execution failed\n");
 		}
 	}
-	free(non_const_command);
 }
 
 /**
@@ -96,8 +97,6 @@ void listExecutables()
 
 /**
 * main - prints a prompt for the user
-* @ac: argument count
-* @av: argument vector
 * Return: 0
 */
 
@@ -126,9 +125,7 @@ int main()
 		}
 	}
         if (len > 0 && command[len - 1] == '\n')
-	{
 		command[len - 1] = '\0';
-        }
 	if (strcmp(command, xit) == 0)
 		break;
 	if (strcmp(command, "/bin/lsbin") == 0)
@@ -137,7 +134,7 @@ int main()
 		continue;
 	}
 	executeCommand(command);
-	}while (strcmp(command, xit) != 0);
+	} while (strcmp(command, xit) != 0);
 	free (command);
 	return 0;
 }
