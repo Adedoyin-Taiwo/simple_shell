@@ -111,12 +111,12 @@ int main(void)
 		if (feof(stdin))
 		{
 			printf("End of file reached. Exiting...\n");
-			continue;
+			break;
 		}
 		else
 		{
 			perror("getline error");
-			continue;
+			break;
 		}
 	}
 	if (len > 0 && command[len - 1] == '\n')
