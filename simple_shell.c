@@ -11,8 +11,8 @@ void executeCommand(const char *command)
 {
 	pid_t pid;
 	int val;
-	
 	char *non_const_command = strdup(command);
+
 	if (non_const_command == NULL)
 	{
 		perror("Memory allocation error");
@@ -27,10 +27,10 @@ void executeCommand(const char *command)
 	else if (pid == 0)
 	{
 		char *args[MAX_COMMAND_LENGTH];
+
 		args[0] = non_const_command;
 		args[1] = NULL;
 		val = execve(command, args, environ);
-		
 		if (val == -1)
 		{
 			perror("Error executing command");
@@ -137,59 +137,6 @@ int main()
 		continue;
 	}
 	executeCommand(command);
-	/**if (stat(command, &file_stat) == -1)
-	{
-		perror("Error checking executable");
-		continue;
-	}
-	if (!(file_stat.st_mode & S_IXUSR))
-	{
-		fprintf(stderr, "Error: The file is not executable\n");
-		continue;
-	}
-	pid = fork();
-        if (pid == -1)
-	{
-		perror("Fork failed");
-		free(command);
-		command = NULL;
-		continue;
-	}
-	else if (pid == 0)
-	{
-		char *args[MAX_COMMAND_LENGTH];
-                args[0] = command;
-                args[1] = NULL;
-		last_slash = strrchr(command, '/');
-		if (last_slash != NULL)
-		{
-			*last_slash = '\0';
-			chdir(command);
-		}
-
-		val = execve(command, args, environ);
-		if (val == -1)
-		{
-			perror("Error executing command");
-			continue;
-		}
-	}
-	else
-	{
-		int status;
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-		{
-			printf("Command executed successfully with exit status: %d\n", WEXITSTATUS(status));
-			continue;
-		}
-		else
-		{
-			printf("Command execution failed\n");
-			continue;
-		}
-	}*/
-
 	}while (strcmp(command, xit) != 0);
 	free (command);
 	return 0;
