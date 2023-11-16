@@ -14,10 +14,7 @@ void executeCommand(const char *command)
 	char *non_const_command = strdup(command);
 
 	if (non_const_command == NULL)
-	{
 		perror("Memory allocation error");
-	}
-
 	pid = fork();
 	if (pid == -1)
 	{
@@ -59,7 +56,7 @@ void executeCommand(const char *command)
 * return: nothing
 */
 
-void listExecutables()
+void listExecutables(void)
 {
 	DIR *dir = opendir("/bin");
 	struct dirent *entry;
@@ -68,12 +65,13 @@ void listExecutables()
 	if (!dir)
 	{
 		perror("Error opening directory");
-        return;
+		return;
 	}
 	while ((entry = readdir(dir)) != NULL)
 	{
 		size_t path_len = strlen("/bin/") + strlen(entry->d_name) + 1;
 		char *file_path = (char *)malloc(path_len);
+
 		if (file_path != NULL)
 		{
 			snprintf(file_path, path_len, "/bin/%s", entry->d_name);
@@ -100,14 +98,13 @@ void listExecutables()
 * Return: 0
 */
 
-int main()
+int main(void)
 {
 	char *xit = "exit", *command = NULL;
 	size_t n = 0;
 	int len;
 
-	do	
-	{
+	do {
 	printf("($) ");
 	fflush(stdout);
 	len = getline(&command, &n, stdin);
@@ -124,7 +121,7 @@ int main()
 			continue;
 		}
 	}
-        if (len > 0 && command[len - 1] == '\n')
+	if (len > 0 && command[len - 1] == '\n')
 		command[len - 1] = '\0';
 	if (strcmp(command, xit) == 0)
 		break;
@@ -135,6 +132,6 @@ int main()
 	}
 	executeCommand(command);
 	} while (strcmp(command, xit) != 0);
-	free (command);
-	return 0;
+	free(command);
+	return (0);
 }
