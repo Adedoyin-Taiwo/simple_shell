@@ -41,8 +41,6 @@ void executeCommand(const char *command)
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
 		{
-			printf("Command executed successfully with
-					exit status: %d\n", WEXITSTATUS(status));
 		}
 		else
 		{
