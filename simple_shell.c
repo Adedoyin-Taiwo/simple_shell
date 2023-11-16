@@ -30,7 +30,7 @@ void executeCommand(const char *command)
 		val = execve(command, args, environ);
 		if (val == -1)
 		{
-			perror("Error executing command");
+			perror("./hsh");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -98,7 +98,7 @@ void listExecutables(void)
 
 int main(void)
 {
-	char *xit = "exit", *command = NULL;
+	char *xit = "^C", *command = NULL;
 	size_t n = 0;
 	int len;
 
